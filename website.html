@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  overflow:hidden;
+}
+
+/* POPUP */
+#popup{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#25D366;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:28px;
+}
+
+/* CHAT */
+#chat{
+  display:none;
+  height:100vh;
+  background:#0b141a;
+  color:white;
+}
+
+.header{
+  padding:10px;
+  background:#111;
+  display:flex;
+  align-items:center;
+}
+
+/* 🔥 DP FIX */
+.dp{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  overflow:hidden;
+  margin-right:10px;
+}
+
+.dp img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.msg{
+  max-width:70%;
+  padding:10px;
+  margin:8px;
+  border-radius:10px;
+  font-size:14px;
+}
+
+.left{background:#202c33;}
+.right{background:#005c4b; margin-left:auto;}
+
+small{
+  font-size:10px;
+  opacity:0.7;
+}
+
+#seeMore{
+  text-align:center;
+  color:#00a884;
+  cursor:pointer;
+}
+
+/* HEARTS */
+#hearts{
+  display:none;
+  position:relative;
+  height:100vh;
+  background:black;
+}
+
+.heart{
+  position:absolute;
+  color:pink;
+  animation:float 5s linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* ENVELOPE */
+#envelope{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:260px;
+  height:180px;
+  background:#f5c16c;
+  border-radius:6px;
+  overflow:hidden;
+}
+
+#flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#e0b45c;
+  clip-path:polygon(0 0,100% 0,50% 55%);
+  transform-origin:top;
+  transition:0.5s;
+  z-index:3;
+}
+
+#paper{
+  position:absolute;
+  width:80%;
+  height:150px;
+  background:white;
+  left:5%;
+  top:15px;
+  border-radius:6px;
+  text-align:center;
+  padding:10px;
+  transform:translateY(120%);
+  transition:0.6s;
+  z-index:2;
+  overflow-y:auto;
+  max-height:60vh;
+}
+
+button{
+  margin:5px;
+  padding:8px 15px;
+  border:none;
+  border-radius:8px;
+}
+
+img{
+  width:100%;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+
+/* FINAL SCREEN */
+#finalScreen{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  color:white;
+  justify-content:center;
+  align-items:center;
+}
+
+#finalText{
+  font-size:28px;
+  border-right:2px solid white;
+}
+</style>
+</head>
+
+<body>
+
+<!-- POPUP -->
+<div id="popup">Opening WhatsApp...</div>
+
+<!-- CHAT -->
+<div id="chat">
+  <div class="header">
+    
+    <!-- 🔥 DP IMAGE -->
+    <div class="dp">
+      <img src="dp.jpg">
+    </div>
+
+    <div>
+      Babeee 💖<br>
+      <small>last seen today at 8:45 pm</small>
+    </div>
+  </div>
+
+  <div style="padding:10px; overflow-y:auto; height:85vh;">
+    <div class="msg left">Bujji ❤️</div>
+    <div class="msg right">Hmm 😚</div>
+    <div class="msg left">Em chesthunav 🥺</div>
+    <div class="msg right">Ninnu gurthu cheskunta unna 💖</div>
+    <div class="msg left">Nijam gaa? 😳</div>
+    <div class="msg right">Nuvvu lekapothe boring ra 😭❤️</div>
+    <div class="msg left">Miss avthunna ninnu 🥺</div>
+    <div class="msg right">Nenu kuda ra ❤️</div>
+    <div class="msg left">Nuvvu chala special 🥹</div>
+    <div class="msg right">Naa life lo best nuvve 💖</div>
+
+    <div id="seeMore">See more...</div>
+  </div>
+</div>
+
+<!-- HEART + ENVELOPE -->
+<div id="hearts">
+  <div id="envelope">
+    <div id="flap"></div>
+
+    <div id="paper">
+      <p id="text">Place your hand here 💌</p>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div id="finalScreen">
+  <h1 id="finalText"></h1>
+</div>
+
+<script>
+
+const popup = document.getElementById("popup");
+const chat = document.getElementById("chat");
+const seeMore = document.getElementById("seeMore");
+const hearts = document.getElementById("hearts");
+const flap = document.getElementById("flap");
+const paper = document.getElementById("paper");
+const text = document.getElementById("text");
+
+setTimeout(()=>{
+  popup.style.display="none";
+  chat.style.display="block";
+},2000);
+
+seeMore.onclick=()=>{
+  alert("Nanu cheat chestunav kada inka unai lee chudu😭");
+  chat.style.display="none";
+  startHearts();
+};
+
+function startHearts(){
+  hearts.style.display="block";
+  for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    hearts.appendChild(h);
+  }
+}
+
+let step=0;
+
+/* 🔥 SINGLE CLICK FIX */
+document.getElementById("envelope").onclick=(e)=>{
+  if(e.target.tagName === "BUTTON") return;
+
+  flap.style.transform="rotateX(180deg)";
+  paper.style.transform="translateY(0)";
+  setTimeout(nextStep,500);
+};
+
+function nextStep(){
+  if(step==0){
+    text.innerHTML=`
+      <p>Will you be my lifeline? ❤️</p>
+      <button onclick="yes1(event)">YES</button>
+      <button onclick="no1(event)">NO</button>
+    `;
+  }
+  else if(step==2){
+    text.innerHTML=`
+      <p>Will you be my lifeline? ❤️</p>
+      <button onclick="yesFinal(event)">YES</button>
+      <button onclick="no1(event)">NO</button>
+    `;
+  }
+  step++;
+}
+
+function yes1(e){
+  e.stopPropagation();
+  alert("First NO click chey bey 😤");
+}
+
+function no1(e){
+  e.stopPropagation();
+
+  text.innerHTML=`<p>
+    Champestha enti raa 😤<br>
+    NO click chesthava ante nuvvu nannu love cheyatledhu 🥺
+  </p>`;
+
+  setTimeout(()=>{
+    step=2;
+    nextStep();
+  },5000); // 🔥 5 sec
+}
+
+function yesFinal(e){
+  e.stopPropagation();
+
+  text.innerHTML=`
+    <img src="pic.jpeg">
+    <p>
+      Nuvvu naa life lo vachinappudu teliyaledhu…
+      kani ippudu ardham ayyindi 💖
+
+      Naa happiness ki reason nuvvu 🥺
+      i am so lucky nuvvu na life lo unnatuku ❤️
+
+      Nuvvu lekapothe nenu complete kaanu 😭
+
+      I love you so much 💌
+      Always natho undu 💖
+    </p>
+  `;
+
+  setTimeout(showFinalText,8000); // 🔥 8 sec
+}
+
+function showFinalText(){
+  hearts.style.display="none";
+  document.getElementById("finalScreen").style.display="flex";
+
+  let finalEl = document.getElementById("finalText");
+  finalEl.innerHTML = "";
+
+  let msg="Happy Journey Vijjuluamma ❤️";
+  let i=0;
+
+  function type(){
+    if(i < msg.length){
+      finalEl.innerHTML += msg[i];
+      i++;
+      setTimeout(type,120);
+    }
+  }
+
+  type();
+}
+
+</script>
+
+</body>
+</html>
